@@ -21,7 +21,7 @@ if ($published -eq 'true') {  ### if $published variable is set to true, the Imp
         {
             Import-AzAutomationRunbook -Path .\Runbooks\$runbook -ResourceGroupName $rg -AutomationAccountName $aa -Type PowerShell -Published -Force
         }
-        elseif ($runnbok -like '*.graphrunbook') 
+        elseif ($runbook -like '*.graphrunbook') 
         {
             Import-AzAutomationRunbook -Path .\Runbooks\$runbook -ResourceGroupName $rg -AutomationAccountName $aa -Type GraphicalPowerShell -Published -Force
         }
@@ -35,7 +35,7 @@ if ($published -eq 'true') {  ### if $published variable is set to true, the Imp
         }
         else 
         {
-            Write-Output "No valid Runbook found"
+            Write-Output "starting Runbook Import............."
         }
     }
 else {
@@ -57,7 +57,7 @@ else {
         } 
     else 
     {
-        Write-Output "No valid Runbook found"
+        Write-Output "starting Runbook Import............."
     }
 }
 } 
