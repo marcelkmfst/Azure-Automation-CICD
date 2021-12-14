@@ -20,6 +20,8 @@ stages:
   jobs:
   - job: 'import_runbook_dev'
     steps:
+    - script: 'echo $(System.DefaultWorkingDirectory)'
+    - script: 'dir $(System.DefaultWorkingDirectory)'
     - task: PowerShell@2
       inputs:
         targetType: 'filePath'
