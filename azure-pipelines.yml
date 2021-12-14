@@ -22,11 +22,12 @@ stages:
     steps:
     - script: 'echo $(System.DefaultWorkingDirectory)'
     - script: 'dir $(System.DefaultWorkingDirectory)'
-    - task: PowerShell@2
+    - task: AzurePowerShell@5
       inputs:
-        targetType: 'filePath'
-        filePath: $(System.DefaultWorkingDirectory)/import-Runbooks-pipeline.ps1
-        arguments: > # Use this to avoid newline characters in multiline string
+        azureSubscription: ADO-SC-Aut-Account-CICD
+        scriptType: 'FilePath'
+        scriptPath: $(System.DefaultWorkingDirectory)/import-Runbooks-pipeline.ps1
+        scriptArguments: > # Use this to avoid newline characters in multiline string
           -rg $(resourcegroup)
           -aa $(dev-automation-account)
       displayName: 'Run a multi-line script'
