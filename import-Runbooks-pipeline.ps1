@@ -9,7 +9,7 @@ $type # find an way to set the target type based on the file extension
 
 
 
-$runbooks=(Get-ChildItem -Path .\runbooks\)
+$runbooks=(Get-ChildItem -Path .\Runbooks\)
 $runbooknamestring=$runbooks.name
 ForEach  ($runbook in $runbooknamestring)
 {
