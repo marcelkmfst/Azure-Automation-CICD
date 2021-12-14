@@ -6,7 +6,10 @@
 
 
 trigger:
-- main
+  branches:
+    include:
+      - '*'
+
 
 pool:
   vmImage: ubuntu-latest
@@ -18,7 +21,7 @@ variables:
   
 stages: 
 - stage: developmemt
-  displayName: 'Runbook-import-to-Aut-Account-CICD-DEV'
+  displayName: 'Import-DEV'
   jobs:
   - deployment: 'to_dev_environemt'
     environment: 'Development'
@@ -27,8 +30,6 @@ stages:
         deploy:
           steps:
           - checkout: self 
-          - script: 'echo $(System.DefaultWorkingDirectory)'
-          - script: 'dir $(System.DefaultWorkingDirectory)'
           - task: AzurePowerShell@5
             inputs:
               azureSubscription: ADO-SC-Aut-Account-CICD
@@ -43,7 +44,7 @@ stages:
 
 
 - stage: production
-  displayName: 'Runbook-import-to-Aut-Account-CICD'
+  displayName: 'Import-Production'
   jobs:
   - deployment: 'to_prod_environment'
     environment: 'Production'
@@ -52,8 +53,6 @@ stages:
         deploy:
           steps:
           - checkout: self
-          - script: 'echo $(System.DefaultWorkingDirectory)'
-          - script: 'dir $(System.DefaultWorkingDirectory)'
           - task: AzurePowerShell@5
             inputs:
               azureSubscription: ADO-SC-Aut-Account-CICD
