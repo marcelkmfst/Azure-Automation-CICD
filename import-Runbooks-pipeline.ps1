@@ -8,6 +8,7 @@ param ($aa, $published, $rg)
 
 #variable set in Runbook
 #$published (if true, pipeline will publisht the runbooks)
+$published = 'true'
 
 
 
@@ -18,19 +19,19 @@ ForEach  ($runbook in $runbooknamestring)
 if ($published -eq 'true') {  ### if $published variable is set to true, the Import Cmdlet will be executed with "-published" option, else without 
         if ($runbook -like '*.ps1') 
         {
-            Import-AzAutomationRunbook -Path .\Runbooks\$runbook -ResourceGroupName $rg -AutomationAccountName $aa -Type PowerShell -Published
+            Import-AzAutomationRunbook -Path .\Runbooks\$runbook -ResourceGroupName $rg -AutomationAccountName $aa -Type PowerShell -Published -Force
         }
         elseif ($runnbok -like '*.graphrunbook') 
         {
-            Import-AzAutomationRunbook -Path .\Runbooks\$runbook -ResourceGroupName $rg -AutomationAccountName $aa -Type GraphicalPowerShell -Published
+            Import-AzAutomationRunbook -Path .\Runbooks\$runbook -ResourceGroupName $rg -AutomationAccountName $aa -Type GraphicalPowerShell -Published -Force
         }
         elseif ($runbook -like '*.py') 
         {
-            Import-AzAutomationRunbook -Path .\Runbooks\$runbook -ResourceGroupName $rg -AutomationAccountName $aa -Type Python2 -Published
+            Import-AzAutomationRunbook -Path .\Runbooks\$runbook -ResourceGroupName $rg -AutomationAccountName $aa -Type Python2 -Published -Force
         }
         elseif ($runbook -like 'workflow*') # Powershell worklfows also have ps1 filetypeextension, so we can´t use ps1 to identify type, the if condition checks if the filename starts with "workflow"
         {
-            Import-AzAutomationRunbook -Path .\Runbooks\$runbook -ResourceGroupName $rg -AutomationAccountName $aa -Type PowerShellWorkflow -Published
+            Import-AzAutomationRunbook -Path .\Runbooks\$runbook -ResourceGroupName $rg -AutomationAccountName $aa -Type PowerShellWorkflow -Published -Force
         }
         else 
         {
@@ -40,15 +41,15 @@ if ($published -eq 'true') {  ### if $published variable is set to true, the Imp
 else {
     if ($runbook -like '*.ps1') 
     {
-        Import-AzAutomationRunbook -Path .\Runbooks\$runbook -ResourceGroupName $rg -AutomationAccountName $aa -Type PowerShell
-    }
+        Import-AzAutomationRunbook -Path .\Runbooks\$runbook -ResourceGroupName $rg -AutomationAccountName $aa -Type PowerShell -Force
+    } 
     elseif ($runnbok -like '*.graphrunbook') 
     {
-        Import-AzAutomationRunbook -Path .\Runbooks\$runbook -ResourceGroupName $rg -AutomationAccountName $aa -Type GraphicalPowerShell 
+        Import-AzAutomationRunbook -Path .\Runbooks\$runbook -ResourceGroupName $rg -AutomationAccountName $aa -Type GraphicalPowerShell -Force
     }
     elseif ($runbook -like '*.py') 
     {
-        Import-AzAutomationRunbook -Path .\Runbooks\$runbook -ResourceGroupName $rg -AutomationAccountName $aa -Type Python2 
+        Import-AzAutomationRunbook -Path .\Runbooks\$runbook -ResourceGroupName $rg -AutomationAccountName $aa -Type Python2 -Force
     }
     elseif ($runbook -like 'workflow*') # Powershell worklfows also have ps1 filetypeextension, so we can´t use ps1 to identify type, the if condition checks if the filename starts with "workflow"
         {
@@ -61,5 +62,15 @@ else {
 }
 } 
 
+# cleanup no longer existing runbooks
+# compare-object 
+# $allrunbooks = get-azautomationrunbook -resourcegroupname $rg -automationAccountName $aa
 
- 
+
+
+# basename $runbooks[0].basename  to get filename without fileextension
+
+
+# todo, hole beide Arrays (rubook in account und in repo)
+# vergleiche beide miteinander
+# lösche runbooks in automatoin account wenn diese nicht mehr in git sind 
