@@ -16,7 +16,7 @@ variables:
   
 stages: 
 - stage: dev
-  displayName: 'Runbook-import-to Aut-Account-CICD-DEV'
+  displayName: 'Runbook-import-to-Aut-Account-CICD-DEV'
   jobs:
   - job: 'import-runbook-to-dev'
     steps:
