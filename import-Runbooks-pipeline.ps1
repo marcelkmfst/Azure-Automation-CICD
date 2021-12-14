@@ -17,9 +17,9 @@ $runbooknamestring=$runbooks.name
 ForEach  ($runbook in $runbooknamestring)
 {
 if ($published -eq 'true') {  ### if $published variable is set to true, the Import Cmdlet will be executed with "-published" option, else without 
-        if ($runbook -like '*.ps1') 
+        if ($runbook -like 'workflow*') 
         {
-            Import-AzAutomationRunbook -Path .\Runbooks\$runbook -ResourceGroupName $rg -AutomationAccountName $aa -Type PowerShell -Published -Force
+            Import-AzAutomationRunbook -Path .\Runbooks\$runbook -ResourceGroupName $rg -AutomationAccountName $aa -Type PowerShellWorkflow -Published -Force
         }
         elseif ($runbook -like '*.graphrunbook') 
         {
@@ -29,9 +29,9 @@ if ($published -eq 'true') {  ### if $published variable is set to true, the Imp
         {
             Import-AzAutomationRunbook -Path .\Runbooks\$runbook -ResourceGroupName $rg -AutomationAccountName $aa -Type Python2 -Published -Force
         }
-        elseif ($runbook -like 'workflow*') # Powershell worklfows also have ps1 filetypeextension, so we can´t use ps1 to identify type, the if condition checks if the filename starts with "workflow"
+        elseif ($runbook -like '*.ps1') # Powershell worklfows also have ps1 filetypeextension, so we can´t use ps1 to identify type, the if condition checks if the filename starts with "workflow"
         {
-            Import-AzAutomationRunbook -Path .\Runbooks\$runbook -ResourceGroupName $rg -AutomationAccountName $aa -Type PowerShellWorkflow -Published -Force
+            Import-AzAutomationRunbook -Path .\Runbooks\$runbook -ResourceGroupName $rg -AutomationAccountName $aa -Type PowerShell -Published -Force
         }
         else 
         {
