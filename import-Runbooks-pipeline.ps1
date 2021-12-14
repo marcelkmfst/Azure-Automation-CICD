@@ -38,6 +38,7 @@ if ($published -eq 'true') {  ### if $published variable is set to true, the Imp
         }
     }
 else {
+    if ($runbook -like '*.ps1') 
     {
         Import-AzAutomationRunbook -Path .\Runbooks\$runbook -ResourceGroupName $rg -AutomationAccountName $aa -Type PowerShell
     }
