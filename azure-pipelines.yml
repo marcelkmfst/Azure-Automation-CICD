@@ -20,7 +20,7 @@ stages:
 - stage: developmemt
   displayName: 'Runbook-import-to-Aut-Account-CICD-DEV'
   jobs:
-  - deployment: 'Development'
+  - deployment: 'to_dev_environemt'
     environment: 'Development'
     strategy:
       runOnce:
@@ -44,7 +44,7 @@ stages:
 - stage: production
   displayName: 'Runbook-import-to-Aut-Account-CICD'
   jobs:
-  - deployment: 'to-prod-environment'
+  - deployment: 'to_prod_environment'
     environment: 'Production'
     strategy:
       runOnce:
