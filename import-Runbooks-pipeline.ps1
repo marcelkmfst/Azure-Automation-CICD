@@ -43,7 +43,7 @@ else {
     {
         Import-AzAutomationRunbook -Path .\Runbooks\$runbook -ResourceGroupName $rg -AutomationAccountName $aa -Type PowerShellWorkflow  -Force
     } 
-    elseif ($runnbok -like '*.graphrunbook') 
+    elseif ($runbook -like '*.graphrunbook') 
     {
         Import-AzAutomationRunbook -Path .\Runbooks\$runbook -ResourceGroupName $rg -AutomationAccountName $aa -Type GraphicalPowerShell -Force
     }
