@@ -30,6 +30,7 @@ stages:
         scriptArguments: > # Use this to avoid newline characters in multiline string
           -rg $(resourcegroup)
           -aa $(dev-automation-account)
+        azurePowerShellVersion: latestVersion
       displayName: 'Run a multi-line script'
 
 
