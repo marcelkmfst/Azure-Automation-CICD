@@ -31,6 +31,7 @@ stages:
           -rg $(resourcegroup)
           -aa $(dev-automation-account)
         azurePowerShellVersion: latestVersion
+        errorActionPreference: continue
       displayName: 'Run a multi-line script'
 
 
