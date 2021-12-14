@@ -26,6 +26,7 @@ stages:
       runOnce:
         deploy:
           steps:
+          - checkout: self 
           - script: 'echo $(System.DefaultWorkingDirectory)'
           - script: 'dir $(System.DefaultWorkingDirectory)'
           - task: AzurePowerShell@5
@@ -50,6 +51,7 @@ stages:
       runOnce:
         deploy:
           steps:
+          - checkout: self
           - script: 'echo $(System.DefaultWorkingDirectory)'
           - script: 'dir $(System.DefaultWorkingDirectory)'
           - task: AzurePowerShell@5
