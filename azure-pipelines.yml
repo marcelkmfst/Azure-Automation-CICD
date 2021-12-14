@@ -23,7 +23,7 @@ stages:
     - task: PowerShell@2
       inputs:
         targetType: 'filePath'
-        filePath: $(System.DefaultWorkingDirectory)\test2.ps1
+        filePath: $(System.DefaultWorkingDirectory)\import-Runbooks-pipeline.ps1
         arguments: > # Use this to avoid newline characters in multiline string
           -rg $(resourcegroup)
           -aa $(dev-automation-account)
