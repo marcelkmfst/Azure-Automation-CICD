@@ -1,7 +1,9 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
+# Pipeline which imports Azure Automation Runbooks from the repo into the Automation Account
+# first without approval into DEV
+# then with approval to Prod
+
+
+
 
 trigger:
 - main
@@ -11,29 +13,57 @@ pool:
 
 variables: 
   resourcegroup: 'RG-AutomationCICD'
-  dev-automation-account: 'Aut-Account-CICD'
-  prod-automation-account: 'Aut-Account-CICD-dev'
+  dev-automation-account: 'Aut-Account-CICD-dev'
+  prod-automation-account: 'Aut-Account-CICD'
   
 stages: 
-- stage: dev
+- stage: developmemt
   displayName: 'Runbook-import-to-Aut-Account-CICD-DEV'
   jobs:
-  - job: 'import_runbook_dev'
-    steps:
-    - script: 'echo $(System.DefaultWorkingDirectory)'
-    - script: 'dir $(System.DefaultWorkingDirectory)'
-    - task: AzurePowerShell@5
-      inputs:
-        azureSubscription: ADO-SC-Aut-Account-CICD
-        scriptType: 'FilePath'
-        scriptPath: $(System.DefaultWorkingDirectory)/import-Runbooks-pipeline.ps1
-        scriptArguments: > # Use this to avoid newline characters in multiline string
-          -rg $(resourcegroup)
-          -aa $(dev-automation-account)
-        azurePowerShellVersion: latestVersion
-        errorActionPreference: continue
-      displayName: 'Run a multi-line script'
+  - deployment: 'Development'
+    environment: 'Development'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - script: 'echo $(System.DefaultWorkingDirectory)'
+          - script: 'dir $(System.DefaultWorkingDirectory)'
+          - task: AzurePowerShell@5
+            inputs:
+              azureSubscription: ADO-SC-Aut-Account-CICD
+              scriptType: 'FilePath'
+              scriptPath: $(System.DefaultWorkingDirectory)/import-Runbooks-pipeline.ps1
+              scriptArguments: > # Use this to avoid newline characters in multiline string
+                -rg $(resourcegroup)
+                -aa $(dev-automation-account)
+              azurePowerShellVersion: latestVersion
+              errorActionPreference: continue
+            displayName: 'DEV'
 
+
+- stage: production
+  displayName: 'Runbook-import-to-Aut-Account-CICD'
+  jobs:
+  - deployment: 'to-prod-environment'
+    environment: 'Production'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - script: 'echo $(System.DefaultWorkingDirectory)'
+          - script: 'dir $(System.DefaultWorkingDirectory)'
+          - task: AzurePowerShell@5
+            inputs:
+              azureSubscription: ADO-SC-Aut-Account-CICD
+              scriptType: 'FilePath'
+              scriptPath: $(System.DefaultWorkingDirectory)/import-Runbooks-pipeline.ps1
+              scriptArguments: > # Use this to avoid newline characters in multiline string
+                -rg $(resourcegroup)
+                -aa $(prod-automation-account)
+              azurePowerShellVersion: latestVersion
+              errorActionPreference: continue
+            displayName: 'Prod'
+            
 
   # trigger:
   #   - '*'
