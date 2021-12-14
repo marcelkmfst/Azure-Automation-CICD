@@ -50,6 +50,10 @@ else {
     {
         Import-AzAutomationRunbook -Path .\Runbooks\$runbook -ResourceGroupName $rg -AutomationAccountName $aa -Type Python2 
     }
+    elseif ($runbook -like 'workflow*') # Powershell worklfows also have ps1 filetypeextension, so we can´t use ps1 to identify type, the if condition checks if the filename starts with "workflow"
+        {
+            Import-AzAutomationRunbook -Path .\Runbooks\$runbook -ResourceGroupName $rg -AutomationAccountName $aa -Type PowerShellWorkflow -Published
+        }
     else 
     {
         Write-Output "No valid Runbook found"
