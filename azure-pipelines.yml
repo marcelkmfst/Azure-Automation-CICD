@@ -21,7 +21,7 @@ variables:
   
 stages: 
 - stage: developmemt
-  displayName: 'Runbook-import-to-Aut-Account-CICD-DEV'
+  displayName: 'Import-DEV'
   jobs:
   - deployment: 'to_dev_environemt'
     environment: 'Development'
@@ -44,7 +44,7 @@ stages:
 
 
 - stage: production
-  displayName: 'Runbook-import-to-Aut-Account-CICD'
+  displayName: 'Import-Production'
   jobs:
   - deployment: 'to_prod_environment'
     environment: 'Production'
