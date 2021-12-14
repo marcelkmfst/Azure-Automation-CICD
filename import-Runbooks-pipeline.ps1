@@ -1,15 +1,14 @@
 #Script to be executed as part of the pipeline run
 
 
+# parameters set via Pipeline
+#$rg= (the resource group)
+#$aa= (the automation account)
+param ($aa, $published, $rg)
 
-$rg="RG-AutomationCICD"
-$aa="Aut-Account-CICD"
-$published = 'true'
+#variable set in Runbook
+#$published (if true, pipeline will publisht the runbooks)
 
-$type # find an way to set the target type based on the file extension
-
-# check if 
-# e.g. if $runbook = *.ps1 $filetype $Type = Powershell
 
 
 $runbooks=(Get-ChildItem -Path .\Runbooks\)
