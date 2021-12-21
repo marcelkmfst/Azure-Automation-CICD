@@ -61,8 +61,14 @@ else {
     }
 }
 } 
-
 # cleanup no longer existing runbooks
+
+# Get Runbooks in Git
+$Gitrunbooks 
+
+# Get Runbooks in account
+$AutAccountRunbooks = Get-AzAutomationRunbook -ResourceGroupName $rg -
+
 # compare-object 
 # $allrunbooks = get-azautomationrunbook -resourcegroupname $rg -automationAccountName $aa
 
