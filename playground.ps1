@@ -1,3 +1,5 @@
+#playground
+
 #Script to be executed as part of the pipeline run
 
 
@@ -5,6 +7,10 @@
 #$rg= (the resource group)
 #$aa= (the automation account)
 param ($aa, $published, $rg)
+
+$rg = 'RG-AutomationCICD'
+$aa = 'aut-account-cicd-dev'
+
 
 #variable set in Runbook
 #$published (if true, pipeline will publisht the runbooks)
@@ -61,22 +67,25 @@ else {
     }
 }
 } 
-# cleanup no longer existing runbooks
+### Cleanup no longer existing runbooks ### 
 
 # Get Runbooks in Git
-$Gitrunbooks 
+$Gitrunbooks = Get-ChildItem .\Runbooks\
+$Gitrunbooks.BaseName
 
 # Get Runbooks in account
-$AutAccountRunbooks = Get-AzAutomationRunbook -ResourceGroupName $rg -
-
-# compare-object 
-# $allrunbooks = get-azautomationrunbook -resourcegroupname $rg -automationAccountName $aa
+$AutAccountRunbooks = Get-AzAutomationRunbook -ResourceGroupName $rg -AutomationAccountName $aa
+$AutAccountRunbooks.name 
 
 
+# compare the git runbooks with the AutAccount Runbooks
+$runbookstobedeleted = (Compare-Object -ReferenceObject $Gitrunbooks.BaseName -DifferenceObject $AutAccountRunbooks.name)
+$runbookstobedeletedasname = $runbookstobedeleted.InputObject # transform variable so that it´s availabe as a string 
 
-# basename $runbooks[0].basename  to get filename without fileextension
+foreach ($runbook in $runbookstobedeletedasname)
+{
+    Remove-AzAutomationRunbook -name $runbook -resourcegroupname $rg -automationaccountname $aa -force
+}
 
 
-# todo, hole beide Arrays (rubook in account und in repo)
-# vergleiche beide miteinander
-# lösche runbooks in automatoin account wenn diese nicht mehr in git sind 
+
