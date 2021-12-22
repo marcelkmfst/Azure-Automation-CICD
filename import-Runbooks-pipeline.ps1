@@ -68,12 +68,14 @@ else {
 ### Cleanup no longer existing runbooks ### 
 
 # Get Runbooks in Git
-$Gitrunbooks = Get-ChildItem -Path .\Runbooks\
-$Gitrunbooks.BaseName
+$Gitrunbooks = (Get-ChildItem -Path .\Runbooks\)
+Write-output "Runbooks currently in GIT" 
+Write-output $Gitrunbooks.BaseName
 
 # Get Runbooks in account
 $AutAccountRunbooks = Get-AzAutomationRunbook -ResourceGroupName $rg -AutomationAccountName $aa
-$AutAccountRunbooks.name 
+Write-output "Runbook currently in Automation Account"
+Write-output $AutAccountRunbooks.name 
 
 
 # compare the git runbooks with the AutAccount Runbooks
