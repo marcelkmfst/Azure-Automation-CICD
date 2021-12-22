@@ -14,7 +14,7 @@ param ($aa, $published, $rg)
 #$published (if true, pipeline will publisht the runbooks)
 $published = 'true'
 
-Write-Output "Importing new Runbooks into Automation Account"
+Write-Output "Importing new or changed Runbooks into Automation Account"
 
 $runbooks=(Get-ChildItem -Path .\Runbooks\)
 $runbooknamestring=$runbooks.name
@@ -80,7 +80,7 @@ Write-output "Runbook currently in Automation Account"
 Write-output $AutAccountRunbooks.name 
 
 
-Write-host -ForegroundColor Red "Performing deletion"
+Write-output "Performing deletion............"
 
 # compare the git runbooks with the AutAccount Runbooks
 $runbookstobedeleted = (Compare-Object -ReferenceObject $Gitrunbooks.BaseName -DifferenceObject $AutAccountRunbooks.name)
@@ -90,6 +90,9 @@ foreach ($runbook in $runbookstobedeletedasname)
 {
     Remove-AzAutomationRunbook -name $runbook -resourcegroupname $rg -automationaccountname $aa -force
 }
+
+write-output "deleted runbooks the following runbooks"
+write-output $runbookstobedeletedasname
 
 
 
