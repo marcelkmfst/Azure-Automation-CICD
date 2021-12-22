@@ -73,7 +73,7 @@ Write-output "Runbooks currently in GIT"
 Write-output $Gitrunbooks.BaseName
 
 # Get Runbooks in account
-$AutAccountRunbooks = Get-AzAutomationRunbook -ResourceGroupName $rg -AutomationAccountName $aa
+$AutAccountRunbooks = (Get-AzAutomationRunbook -ResourceGroupName $rg -AutomationAccountName $aa)
 Write-output "Runbook currently in Automation Account"
 Write-output $AutAccountRunbooks.name 
 
