@@ -80,7 +80,7 @@ Write-output "Runbook currently in Automation Account"
 Write-output $AutAccountRunbooks.name 
 
 
-Write-output "Performing deletion"
+Write-host -ForegroundColor Red "Performing deletion"
 
 # compare the git runbooks with the AutAccount Runbooks
 $runbookstobedeleted = (Compare-Object -ReferenceObject $Gitrunbooks.BaseName -DifferenceObject $AutAccountRunbooks.name)
