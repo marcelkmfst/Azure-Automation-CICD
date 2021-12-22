@@ -23,7 +23,7 @@ stages:
 - stage: developmemt
   displayName: 'Import-DEV'
   jobs:
-  - deployment: 'to_dev_environemt'
+  - deployment: 'importing_new_runbooks_and_delete_old_ones'
     environment: 'Development'
     strategy:
       runOnce:
@@ -46,7 +46,7 @@ stages:
 - stage: production
   displayName: 'Import-Production'
   jobs:
-  - deployment: 'to_prod_environment'
+  - deployment: 'importing_new_runbooks_and_delete_old_ones'
     environment: 'Production'
     strategy:
       runOnce:

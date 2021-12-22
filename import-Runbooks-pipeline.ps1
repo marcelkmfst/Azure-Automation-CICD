@@ -68,7 +68,7 @@ else {
 ### Cleanup no longer existing runbooks ### 
 
 # Get Runbooks in Git
-$Gitrunbooks = Get-ChildItem .\Runbooks\
+$Gitrunbooks = Get-ChildItem -Path .\Runbooks\
 $Gitrunbooks.BaseName
 
 # Get Runbooks in account
