@@ -14,7 +14,7 @@ param ($aa, $published, $rg)
 #$published (if true, pipeline will publisht the runbooks)
 $published = 'true'
 
-
+Write-Output "Importing new Runbooks into Automation Account"
 
 $runbooks=(Get-ChildItem -Path .\Runbooks\)
 $runbooknamestring=$runbooks.name
@@ -67,6 +67,8 @@ else {
 } 
 ### Cleanup no longer existing runbooks ### 
 
+Write-Output "Deleting Sourcecontrol removed Runbooks in Automation Account"
+
 # Get Runbooks in Git
 $Gitrunbooks = (Get-ChildItem -Path .\Runbooks\)
 Write-output "Runbooks currently in GIT" 
@@ -77,9 +79,8 @@ $AutAccountRunbooks = (Get-AzAutomationRunbook -ResourceGroupName $rg -Automatio
 Write-output "Runbook currently in Automation Account"
 Write-output $AutAccountRunbooks.name 
 
-$rg= "RG-AutomationCICD"
-$aa = "aut-account-cicd-dev"
 
+Write-output "Performing deletion"
 
 # compare the git runbooks with the AutAccount Runbooks
 $runbookstobedeleted = (Compare-Object -ReferenceObject $Gitrunbooks.BaseName -DifferenceObject $AutAccountRunbooks.name)
