@@ -91,7 +91,7 @@ foreach ($runbook in $runbookstobedeletedasname)
     Remove-AzAutomationRunbook -name $runbook -resourcegroupname $rg -automationaccountname $aa -force
 }
 
-write-output "deleted runbooks the following runbooks"
+write-output "deleted the following runbooks"
 write-output $runbookstobedeletedasname
 
 
